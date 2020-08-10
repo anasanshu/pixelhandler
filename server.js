@@ -1,7 +1,7 @@
-const express = require('express')
-const port = process.env.PORT || 3000;
+var express = require('express');
+var port = process.env.PORT || 3000;
 
-const app = express()
+var app = express();
 
 app.use(express.static(__dirname+'/dist/pixelhandler'));
 
@@ -9,4 +9,6 @@ app.all('*', (req, res) => {
     res.status(200).sendFile(__dirname+'/dist/pixelhandler/index.html');
 });
 
-app.listen(port);
+app.listen(port, function(){
+    console.log("App listeing on port: "+port);
+});
