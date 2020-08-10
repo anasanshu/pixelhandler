@@ -6,6 +6,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AppErrorHandler } from './common/app.error.handler';
 import { HttpClientModule } from '@angular/common/http';
+import { WorkerService } from './worker.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-    {provide: ErrorHandler, useClass: AppErrorHandler}
+    {provide: ErrorHandler, useClass: AppErrorHandler},
+    WorkerService
   ],
   bootstrap: [AppComponent]
 })
