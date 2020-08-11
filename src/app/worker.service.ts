@@ -17,14 +17,18 @@ export class WorkerService {
   }
 
   firePixel(resource){
-      var queryParams = (JSON.stringify(resource)).split(',').join('&');
-      queryParams = queryParams.split('{').join('');
-      queryParams = queryParams.split('}').join('');
-      queryParams = queryParams.split('"').join('');
-      queryParams = queryParams.split(':').join('=');
-      console.log(queryParams);
-      return this.httpClient.get(this.url+'?'+queryParams)
+      return this.httpClient.get(this.url+'?'+this.buildQuery(Object.assign({}, resource)))
       .pipe(catchError(this.handleError));
+  }
+
+  private buildQuery(params){   
+    delete params.id; 
+    var queryParams = (JSON.stringify(params)).split(',').join('&');
+    queryParams = queryParams.split('{').join('');
+    queryParams = queryParams.split('}').join('');
+    queryParams = queryParams.split('"').join('');
+    queryParams = queryParams.split(':').join('=');
+    return queryParams;
   }
 
   private handleError(error: Response){
