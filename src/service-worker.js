@@ -2,10 +2,10 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox
 
 self.addEventListener('fetch', function(event) {
     if ((event.request.url).includes("pixel.gif")) {                          
-      event.request.url = translateParams(event.request.url);
+      url = translateParams(event.request.url);
       event.respondWith(
-        fetch(event.request)
-      )
+        fetch(url)
+      );
     }
 });
 

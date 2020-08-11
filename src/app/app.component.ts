@@ -19,7 +19,6 @@ export class AppComponent {
 
   }
   title = 'pixelhandler';
-  imageUrl = "https://i1.wp.com/www.writefordemocracy.in/wp-content/uploads/2020/07/ghandi-02.jpg";
   
   queryParams = [
     {
@@ -54,21 +53,11 @@ export class AppComponent {
     }
   ]
 
-  consoleLog = () => {
-    console.log("Logged into  the console");
-  }
-
   callServiceWorker = (id) => {
       var param = this.queryParams.find( param => param.id === id )
       console.log("Client clicked - "+param.x1);
       this.serviceworker.firePixel(param)
       .subscribe(
-      // posts => {
-      //   post.id = posts['id'];
-      // },
-      result => {
-        console.log(result);
-      },
       (error: AppError) => {
         if(error instanceof NotFoundError){
           alert(error.message);
