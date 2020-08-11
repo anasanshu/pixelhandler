@@ -1,28 +1,21 @@
-// importScripts('ngsw-worker.js');
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
 self.addEventListener('fetch', function(event) {
-    const queryObject = getParams(event.request.url);
-    console.log("fetching - "+queryObject);
-
-    if (/\\pixel.gif$/.test(event.request.url)) {                          
-      // event.respondWith(
-      //   console.log("fetching scaler"),
-      //   fetch('https://www.scaler.com/')
-      // ); 
-      console.log(" Request for - "+event.request);
+    if ((event.request.url).includes("pixel.gif")) {                          
+      event.request.url = translateParams(event.request.url);
+      event.respondWith(
+        fetch(event.request)
+      )
     }
 });
 
-var getParams = function (url) {
-	var params = {};
-	var parser = document.createElement('a');
-	parser.href = url;
-	var query = parser.search.substring(1);
-	var vars = query.split('&');
-	for (var i = 0; i < vars.length; i++) {
-		var pair = vars[i].split('=');
-		params[pair[0]] = decodeURIComponent(pair[1]);
-	}
-	return params;
+var translateParams = function (url) {
+  url = url.replace("interaction", "event");
+  url = url.replace("client", "customer");
+  url = url.replace("os_name", "operating_system_name");
+  url = url.replace("x1", "utm_source");
+  url = url.replace("x2", "utm_medium");
+  url = url.replace("x3", "utm_campaign");
+  url = url.replace("landing_url", "campaign_url");
+  return url;
 };
